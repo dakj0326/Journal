@@ -1,0 +1,95 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+
+body {
+    background:
+    linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 0.0) 0%,
+        rgba(147, 6, 6, 0.1) 50%,
+        rgba(0, 0, 0, 0.0) 100%
+    ),
+    linear-gradient(
+        180deg,
+        #550019 0%,
+        #000000 100%
+    );
+}
+
+.app {
+    height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 260px;
+    position: relative;
+    background: 
+    linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.9) 0%,
+        rgba(0, 0, 0, 0.3) 30%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    
+}
+
+.sidebar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 2px;
+    height: 100%;
+
+    background: linear-gradient(
+        180deg,
+        rgba(147, 6, 6, 0.8) 0%,
+        rgba(0, 0, 0, 0.5) 30%,
+        rgba(0, 0, 0, 0.5) 65%,
+        rgba(147, 6, 6, 0.3) 100%
+    );
+}
+
+.sidebar-logo {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.sidebar-logo img {
+    max-width: 60%;
+    height: auto;
+    display: block;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 2.5rem;
+}
+
+.sidebar-menu a {
+    display: block;
+
+    padding: 0.75rem 2rem;
+    
+    color: rgba(240, 230, 230, 0.85);
+    text-decoration: none;
+
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+
+.sidebar-menu a:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
