@@ -7,13 +7,14 @@ body {
     background:
     linear-gradient(
         90deg,
-        rgba(0, 0, 0, 0.0) 0%,
-        rgba(147, 6, 6, 0.1) 50%,
-        rgba(0, 0, 0, 0.0) 100%
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(143, 0, 0, 0.1) 50%,
+        rgba(0, 0, 0, 0.31) 100%
     ),
     linear-gradient(
         180deg,
-        #550019 0%,
+        #4f0000 0%,
+        #200000 70%,
         #000000 100%
     );
 }
@@ -28,7 +29,12 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    padding: 2rem;
+}
+
+#bg {
+    position: fixed;
+    inset: 0;
+    z-index: -4;
 }
 
 .login-logo {
@@ -44,18 +50,6 @@ body {
     max-width: 50%;
     height: auto;
     display: block;
-}
-/* Utility: visually hidden for accessible headings */
-.visually-hidden {
-    position: absolute !important;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-    border: 0;
 }
 
 /* Login button styles */
@@ -83,12 +77,12 @@ body {
     align-items: center;
     gap: 0.6rem;
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    color: #fff;
+    color: #9d0101;
     padding: 12px 28px;
     font-size: 1.025rem;
     font-weight: 600;
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.06);
+
     box-shadow: 0 6px 14px rgba(0,0,0,0.45);
     overflow: hidden;
     transition: transform 0.16s ease, background 0.15s ease, box-shadow 0.15s ease;
@@ -96,7 +90,7 @@ body {
 
 .login-btn:hover, .add-user-btn:hover {
     transform: translateY(-3px);
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
     box-shadow: 0 12px 30px rgba(0,0,0,0.5);
 }
 
@@ -113,7 +107,7 @@ body {
 .login-icon,
 .add-icon {
     display: block;
-    color: #ffffff;
+    color: #9d0101;
     opacity: 0.95;
 }
 
@@ -161,10 +155,10 @@ body {
 
     background: linear-gradient(
         180deg,
-        rgba(147, 6, 6, 0.8) 0%,
+        rgba(147, 0, 0, 0.8) 0%,
         rgba(0, 0, 0, 0.5) 30%,
         rgba(0, 0, 0, 0.5) 65%,
-        rgba(147, 6, 6, 0.3) 100%
+        rgba(147, 0, 0, 0.3) 100%
     );
 }
 
