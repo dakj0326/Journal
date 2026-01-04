@@ -5,6 +5,7 @@
     <title>Log In</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<script src="/index_auth.js" defer></script>
 <body>
     <div class="app2">
         <main class="login-center" role="main" aria-labelledby="login-heading">
@@ -13,7 +14,7 @@
                 <img src="assets/logo.png" alt="Investment Journal logo">
             </a>
             <div class="btn-group" role="group" aria-label="Main actions">
-                <button type="button" class="login-btn" id="login-button" aria-label="Log in to Journal" onclick="location.href='home.html'">
+                <button type="button" class="login-btn" id="login-button" aria-label="Log in to Journal" aria-haspopup="dialog" aria-controls="login-modal">
                     <svg class="login-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17 8V7a5 5 0 0 0-10 0v1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                         <rect x="3.5" y="8.5" width="17" height="12" rx="2.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -22,7 +23,7 @@
                     <span>Log In</span>
                 </button>
 
-                <button type="button" class="add-user-btn" id="add-user-button" aria-label="Add user">
+                <button type="button" class="add-user-btn" id="add-user-button" aria-label="Add user" aria-haspopup="dialog" aria-controls="user-modal">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="add-icon">
                         <path d="M15 14c2 0 3.333 1 4 2v1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                         <circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -33,6 +34,172 @@
                 </button>
             </div>
         </main>
+
+        <!-- Login modal -->
+        <div id="login-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="login-modal-title" hidden>
+            <div class="modal-overlay" data-close="true"></div>
+            <div class="modal-content" role="document" aria-describedby="login-desc">
+                <button class="modal-close" id="login-close" aria-label="Close">&times;</button>
+                <h2 id="login-modal-title">Log in</h2>
+                <p id="login-desc" class="sr-only">Provide your username and password to sign in.</p>
+                <form id="login-form" novalidate>
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" name="username" required autocomplete="username">
+
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required autocomplete="current-password">
+
+                    <button type="submit" class="btn-create">Sign in</button>
+                    <p id="login-form-msg" class="form-msg sr-only" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
+
+        <!-- Create User modal -->
+        <div id="user-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="user-modal-title" hidden>
+            <div class="modal-overlay" data-close="true"></div>
+            <div class="modal-content" role="document" aria-describedby="user-desc">
+                <button class="modal-close" id="user-close" aria-label="Close">&times;</button>
+                <h2 id="user-modal-title">Create User</h2>
+                <p id="user-desc" class="sr-only">Provide a username and password to create a new user.</p>
+                <form id="user-create-form" novalidate>
+                    <label for="user-username">Username</label>
+                    <input type="text" id="user-username" name="username" required autocomplete="username">
+
+                    <label for="user-password">Password</label>
+                    <input type="password" id="user-password" name="password" required autocomplete="new-password">
+
+                    <button type="submit" class="btn-create">Create User</button>
+                    <p id="user-form-msg" class="form-msg sr-only" aria-live="polite"></p>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <script>
+    (function(){
+        // Login modal
+        var openLogin = document.getElementById('login-button');
+        var loginModal = document.getElementById('login-modal');
+        var loginClose = document.getElementById('login-close');
+        var loginOverlay = loginModal && loginModal.querySelector('.modal-overlay');
+        var loginForm = document.getElementById('login-form');
+        var loginMsg = document.getElementById('login-form-msg');
+        var prevFocusLogin = null;
+
+        function getFocusable(container){
+            return container.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])');
+        }
+
+        // Client-side hashing and localStorage user management removed — handle authentication on the server or through your preferred backend. 
+        // The login form will dispatch an `app:login` CustomEvent with `{ username, password }` when submitted.
+
+        function openLoginModal(){
+            prevFocusLogin = document.activeElement;
+            loginModal.removeAttribute('hidden');
+            loginModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            var focusable = getFocusable(loginModal);
+            if (focusable.length) focusable[0].focus();
+            loginMsg.textContent = '';
+            loginMsg.classList.add('sr-only');
+        }
+
+        function closeLoginModal(){
+            loginModal.setAttribute('hidden', '');
+            loginModal.classList.remove('open');
+            document.body.style.overflow = '';
+            if (prevFocusLogin) prevFocusLogin.focus();
+        }
+
+        if (openLogin) openLogin.addEventListener('click', function(e){ e.preventDefault(); openLoginModal(); });
+        if (loginClose) loginClose.addEventListener('click', function(){ closeLoginModal(); });
+        if (loginOverlay) loginOverlay.addEventListener('click', function(){ closeLoginModal(); });
+
+        if (loginModal) loginModal.addEventListener('keydown', function(e){
+            if (e.key === 'Escape') { closeLoginModal(); return; }
+            if (e.key === 'Tab') {
+                var focusable = Array.prototype.slice.call(getFocusable(loginModal));
+                if (!focusable.length) return;
+                var first = focusable[0], last = focusable[focusable.length -1];
+                if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            }
+        });
+
+        if (loginForm) loginForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            var username = document.getElementById('login-username').value.trim();
+            var password = document.getElementById('login-password').value;
+
+            // Dispatch a CustomEvent for the app to handle authentication server-side.
+            window.dispatchEvent(new CustomEvent('app:login', { detail: { username: username, password: password } }));
+
+            // Close the modal (no client-side validation or storage performed)
+            loginMsg.textContent = '';
+            loginMsg.classList.add('sr-only');
+            setTimeout(function(){ closeLoginModal(); }, 200);
+        });
+
+        // Create User modal (existing)
+        var openBtn = document.getElementById('add-user-button');
+        var modal = document.getElementById('user-modal');
+        var closeBtn = document.getElementById('user-close');
+        var overlay = modal && modal.querySelector('.modal-overlay');
+        var form = document.getElementById('user-create-form');
+        var msg = document.getElementById('user-form-msg');
+        var prevFocus = null;
+
+        // Client-side user creation and localStorage persistence removed — handle user creation on the server side.
+        // The create-user form dispatches an `app:user:create` CustomEvent with `{ username, password }` when submitted.
+
+        function openModal(){
+            prevFocus = document.activeElement;
+            modal.removeAttribute('hidden');
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            var focusable = getFocusable(modal);
+            if (focusable.length) focusable[0].focus();
+            msg.textContent = '';
+            msg.classList.add('sr-only');
+        }
+
+        function closeModal(){
+            modal.setAttribute('hidden', '');
+            modal.classList.remove('open');
+            document.body.style.overflow = '';
+            if (prevFocus) prevFocus.focus();
+        }
+
+        if (openBtn) openBtn.addEventListener('click', function(e){ e.preventDefault(); openModal(); });
+        if (closeBtn) closeBtn.addEventListener('click', function(){ closeModal(); });
+        if (overlay) overlay.addEventListener('click', function(){ closeModal(); });
+
+        if (modal) modal.addEventListener('keydown', function(e){
+            if (e.key === 'Escape') { closeModal(); return; }
+            if (e.key === 'Tab') {
+                var focusable = Array.prototype.slice.call(getFocusable(modal));
+                if (!focusable.length) return;
+                var first = focusable[0], last = focusable[focusable.length -1];
+                if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            }
+        });
+
+        if (form) form.addEventListener('submit', function(e){
+            e.preventDefault();
+            var username = document.getElementById('user-username').value.trim();
+            var password = document.getElementById('user-password').value;
+
+            // Dispatch a CustomEvent for server-side handling of user creation.
+            window.dispatchEvent(new CustomEvent('app:user:create', { detail: { username: username, password: password } }));
+
+            msg.textContent = '';
+            msg.classList.add('sr-only');
+            form.reset();
+            setTimeout(function(){ closeModal(); }, 200);
+        });
+    })();
+    </script>
 </body>
 </html>
