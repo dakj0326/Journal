@@ -27,11 +27,24 @@ body {
 .app2 {
     height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     padding: 2rem;
 }
 
+.login-logo {
+    display: flex;
+    margin-top: 2rem;
+    justify-content: center;
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.login-logo img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+}
 /* Utility: visually hidden for accessible headings */
 .visually-hidden {
     position: absolute !important;
@@ -58,16 +71,17 @@ body {
     flex-wrap: wrap;
 }
 
-..login-btn {
+/* Shared button appearance: identical for Log In and Add User */
+.login-btn, .add-user-btn {
     -webkit-appearance: none;
+    width: 160px;
     appearance: none;
     cursor: pointer;
     border: none;
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-    /* Match Add User colors */
+    gap: 0.6rem;
     background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
     color: #fff;
     padding: 12px 28px;
@@ -80,65 +94,18 @@ body {
     transition: transform 0.16s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 
-.add-user-btn {
-    -webkit-appearance: none;
-    appearance: none;
-    cursor: pointer;
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    color: #fff;
-    padding: 12px 28px;
-    font-size: 1.025rem;
-    font-weight: 600;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.06);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.45);
-    transition: transform 0.16s ease, background 0.15s ease, box-shadow 0.15s ease;
-}
-
-.add-user-btn:hover {
+.login-btn:hover, .add-user-btn:hover {
     transform: translateY(-3px);
-    background: rgba(255,255,255,0.03);
+    background: rgba(0, 0, 0, 0.1);
     box-shadow: 0 12px 30px rgba(0,0,0,0.5);
 }
 
-.add-user-btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(147,6,6,0.08);
-}
-
-.login-btn::after {
-    content: "";
-    position: absolute;
-    left: -30%;
-    top: 0;
-    width: 28%;
-    height: 100%;
-    background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-    transform: skewX(-25deg) translateX(-120%);
-    transition: transform 0.5s cubic-bezier(.22,.9,.33,1);
-    pointer-events: none;
-}
-
-.login-btn:hover::after {
-    transform: skewX(-25deg) translateX(220%);
-}
-
-.login-btn:hover {
-    transform: translateY(-3px);
-    background: rgba(255,255,255,0.03);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
-}
-
-.login-btn:active {
+.login-btn:active, .add-user-btn:active {
     transform: translateY(-1px) scale(0.997);
     box-shadow: 0 8px 20px rgba(0,0,0,0.45);
 }
 
-.login-btn:focus {
+.login-btn:focus, .add-user-btn:focus {
     outline: none;
     box-shadow: 0 0 0 4px rgba(147,6,6,0.08);
 }
@@ -210,7 +177,7 @@ body {
 
 
 .sidebar-logo img {
-    max-width: 60%;
+    max-width: 50%;
     height: auto;
     display: block;
 }
